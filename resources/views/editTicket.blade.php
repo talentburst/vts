@@ -5,11 +5,11 @@
 		<ul class="breadcrumb">
 			<li>
 				<i class="ace-icon fa fa-home home-icon"></i>
-				<a href="#">Home</a>
+				<a href="{{ url('/dashboard') }}">Home</a>
 			</li>
 
 			<li>
-				<a href="#">Ticket</a>
+				<a href="{{ url('/openTickets') }}">Ticket</a>
 			</li>
 			<li class="active">Edit Ticket</li>
 		</ul><!-- /.breadcrumb -->
@@ -34,7 +34,7 @@
 				
 				@foreach ($tickets as $ticket)
 
-				{!! Form::open(array('action' => array('TicketController@editTicketData', $ticket->id), 'class' => 'form-horizontal')) !!}
+				{!! Form::open(array('action' => array('TicketController@editTicketData', $ticket->ticket_id), 'class' => 'form-horizontal')) !!}
 
 					<div class="form-group {{ $errors->has('subject') ? 'has-error' : '' }}">
 						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('name') ? 'has-error' : '' }}" for="form-field-1"> Subject </label>
@@ -45,6 +45,27 @@
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('subject') }}</span>
+					</div>from_date
+
+					<div class="form-group {{ $errors->has('leave_days') ? 'has-error' : '' }}">
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('leave_days') ? 'has-error' : '' }}" for="form-field-1"> Leave Days </label>
+
+						<div class="col-sm-9">
+
+						{!! Form::number('leave_days', $ticket->leave_no, ['min'=>0.50,'class'=>'col-xs-10 col-sm-5', 'id'=>'form-field-11', 'step'=>'any', 'placeholder'=>'Number of days to be taken']) !!}		
+						
+                           <span class="text-danger">{{ $errors->first('leave_days') }}</span>
+						</div>						
+					</div>
+
+					<div class="form-group {{ $errors->has('from_date') ? 'has-error' : '' }}">
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('from_date') ? 'has-error' : '' }}" for="form-field-1"> Effective From </label>
+
+						<div class="col-sm-9">
+
+						{!! Form::date('from_date', $ticket->from_date, ['class'=>'col-xs-10 col-sm-5', 'id'=>'form-field-1', 'placeholder'=>'Leave Effective From date']) !!}			
+                           <span class="text-danger">{{ $errors->first('from_date') }}</span>
+						</div>						
 					</div>
 
 					<div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
@@ -52,7 +73,7 @@
 
 						<div class="col-sm-6">							
 
-							{!! Form::textarea('message', $ticket->message, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Message']) !!} 
+							{!! Form::textarea('message', $ticket->message, ['class'=>'autosize-transition form-control', 'rows' => 5, 'cols' => 40, 'placeholder'=>'Enter Message']) !!} 
 
 						</div>
 						<span class="text-danger">{{ $errors->first('message') }}</span>
@@ -63,7 +84,7 @@
 
 						<div class="col-sm-6">
 
-							{!! Form::textarea('remark', $ticket->remark, ['class'=>'autosize-transition form-control',  'placeholder'=>'Enter remark']) !!}
+							{!! Form::textarea('remark', $ticket->remark, ['class'=>'autosize-transition form-control',  'rows' => 5, 'cols' => 40, 'placeholder'=>'Enter remark']) !!}
 														
 						</div>
 					</div>

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Tickets extends Model
 {
     public $table = 'ticket_details';  
-    public $fillable = ['user_id','mark_to','responce_by','ticket_id','name','email','subject','message','responce','remark','created_at'];
+    public $fillable = ['user_id','ticket_id','subject','message','leave_no','from_date','responce','remark','mark_to','responce','responce_by','created_at','updated_at','deleted_at','status'];
 }

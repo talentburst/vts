@@ -7,10 +7,8 @@
 				<i class="ace-icon fa fa-home home-icon"></i>
 				<a href="{{ url('/dashboard') }}">Home</a>
 			</li>
-			<li>
-				<a href="{{ url('/openTickets') }}">Applications</a>
-			</li>
-				<li class="active">Closed Applications</li>
+			
+			<li class="active">Closed applications</li>
 			</ul><!-- /.breadcrumb -->
 			
 		</div>
@@ -19,248 +17,123 @@
 
 			<div class="page-header">
 				<h1>
-					Applications
+					Home
 					<small>
 						<i class="ace-icon fa fa-angle-double-right"></i>
-						Closed Applications
+						Closed applications
 					</small>
 				</h1>
 			</div><!-- /.page-header -->
 
-			<div class="row">
-				<div class="col-xs-12">
-					<!-- PAGE CONTENT BEGINS -->
-					
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								
 
-					<!-- <h4 class="pink">
-						<i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-						<a href="#modal-table" role="button" class="green" data-toggle="modal"> Table Inside a Modal Box </a>
-					</h4>
+								@if(Session::has('success'))
+						   <div class="alert alert-success">
+						     {{ Session::get('success') }}
+						   </div>
+						@endif
 
-					<div class="hr hr-18 dotted hr-double"></div> -->
+							 <h3 class="header smaller lighter blue">Closed Applications dataTables</h3>
 
-					<div class="row">
-						<div class="col-xs-12">
-							<!-- <h3 class="header smaller lighter blue">jQuery dataTables</h3> -->
+								<div class="row">
+									<div class="col-xs-12">
+										
+										<div class="clearfix">
+											<div class="pull-right tableTools-container"></div>
+										</div>							
 
-							<div class="clearfix">
-								<div class="pull-right tableTools-container"></div>
-							</div> 
+										<!-- div.table-responsive -->
 
-							 <div class="table-header">
-								Results for "Closed Applications"
-							</div> 
+										<!-- div.dataTables_borderWrap -->
+										<div>
+											<table id="dynamic-table" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th class="detail-col" scope="row">#</th>				
+														<th>Application Id | Status</th>
+														<th>Name</th>							
+														<th>Email Id</th>
+														<th>Subject</th>
+														<th><i class="ace-icon fa fa-clock-o"></i>
+															Date
+														</th>
+														<th class="hidden-480">Action</th>
+														
+													</tr>
+												</thead>
 
-							<!-- div.table-responsive -->
+												<tbody>
+												<?php $i=1;?>
+												@foreach ($tickets as $ticket)
 
-							<!-- div.dataTables_borderWrap -->
-							<div>
-								<table id="dynamic-table" class="table table-striped table-bordered table-hover">
-									<thead>
-										<tr>
-											<th class="detail-col" scope="row">#</th>			
-											<th>Application Id</th>
-											<th>Name</th>								
-											<th>Email Id</th>
-											<th>Subject</th>
-											<th>
-												<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-												Application Date
-											</th>
-											<th class="hidden-480">Status</th>
-											<th></th>
-										</tr>
-									</thead>
+												<tr>
+													<th class="detail-col" scope="row">{{$i}}</th>
+													<td>#{{$ticket->ticket_id}} | 
+														<span class="label label-sm label-success arrowed">{{$ticket->status_name}}</span>
+													</td>
+													<td>{{$ticket->name}}</td>
+													<td>{{$ticket->email}}</td>
+													<td>{{$ticket->subject}} | <b>{{$ticket->leave_no}}</b> Day's</td>
+													 <td>{{$ticket->created_at->format('d/m/Y')}}</td>
 
-									<tbody>
+													<td>
+														<div class="hidden-sm hidden-xs action-buttons">
+															<a class="blue" href ="viewApplication/{{ $ticket->ticket_id }}" title="View Application">
+																<i class="ace-icon fa fa-search-plus bigger-130"></i>
+															</a>											
+														</div>
 
-									<?php $i=1;?>
-									@foreach ($tickets as $ticket)
+														<div class="hidden-md hidden-lg">
+															<div class="inline pos-rel">
+																<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+																	<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+																</button>
 
-										<tr>
-											<th class="detail-col" scope="row">{{$i}}</th>
-											<td>#{{$ticket->ticket_id}}</td>
-											<td>{{$ticket->name}}</td>
-											<td>{{$ticket->email}}</td>
-											<td>{{$ticket->subject}}</td>
-											 <td>{{$ticket->created_at->format('m/d/Y')}}</td>
-
-											<td class="hidden-480">
-												<span class="label label-sm label-success">Closed</span>
-											</td>
-
-											<td>
-												<div class="hidden-sm hidden-xs action-buttons">
-													<a class="blue" href="#">
-														<i class="ace-icon fa fa-search-plus bigger-130"></i>
-													</a>											
-												</div>
-
-												<div class="hidden-md hidden-lg">
-													<div class="inline pos-rel">
-														<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
-															<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
-														</button>
-
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<li>
-																<a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																	</span>
-																</a>
-															</li>								
-														</ul>
-													</div>
-												</div>
-											</td>
-										</tr>						
-
-								<?php $i++;?>
-								@endforeach	
-
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-
-					<div id="modal-table" class="modal fade" tabindex="-1">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header no-padding">
-									<div class="table-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-											<span class="white">&times;</span>
-										</button>
-										Results for "Latest Registered Domains
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+																	<li>
+																		<a href ="viewApplication/{{ $ticket->ticket_id }}" title="View Application" class="tooltip-info" data-rel="tooltip" title="View">
+																			<span class="blue">
+																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
+																			</span>
+																		</a>
+																	</li>								
+																</ul>
+															</div>
+														</div>
+													</td>
+												</tr>
+												<?php $i++;?>
+												@endforeach
+													
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 
-								<div class="modal-body no-padding">
-									<table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
-										<thead>
-											<tr>
-												<th>Domain</th>
-												<th>Price</th>
-												<th>Clicks</th>
+								
 
-												<th>
-													<i class="ace-icon fa fa-clock-o bigger-110"></i>
-													Update
-												</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<tr>
-												<td>
-													<a href="#">ace.com</a>
-												</td>
-												<td>$45</td>
-												<td>3,330</td>
-												<td>Feb 12</td>
-											</tr>
-
-											<tr>
-												<td>
-													<a href="#">base.com</a>
-												</td>
-												<td>$35</td>
-												<td>2,595</td>
-												<td>Feb 18</td>
-											</tr>
-
-											<tr>
-												<td>
-													<a href="#">max.com</a>
-												</td>
-												<td>$60</td>
-												<td>4,400</td>
-												<td>Mar 11</td>
-											</tr>
-
-											<tr>
-												<td>
-													<a href="#">best.com</a>
-												</td>
-												<td>$75</td>
-												<td>6,500</td>
-												<td>Apr 03</td>
-											</tr>
-
-											<tr>
-												<td>
-													<a href="#">pro.com</a>
-												</td>
-												<td>$55</td>
-												<td>4,250</td>
-												<td>Jan 21</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<div class="modal-footer no-margin-top">
-									<button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
-										<i class="ace-icon fa fa-times"></i>
-										Close
-									</button>
-
-									<ul class="pagination pull-right no-margin">
-										<li class="prev disabled">
-											<a href="#">
-												<i class="ace-icon fa fa-angle-double-left"></i>
-											</a>
-										</li>
-
-										<li class="active">
-											<a href="#">1</a>
-										</li>
-
-										<li>
-											<a href="#">2</a>
-										</li>
-
-										<li>
-											<a href="#">3</a>
-										</li>
-
-										<li class="next">
-											<a href="#">
-												<i class="ace-icon fa fa-angle-double-right"></i>
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div><!-- /.modal-content -->
-						</div><!-- /.modal-dialog -->
-					</div>
-
-					<!-- PAGE CONTENT ENDS -->
-				</div><!-- /.col -->
-			</div><!-- /.row -->
-		</div><!-- /.page-content -->
-	</div>
-</div><!-- /.main-content -->
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div>
+			</div><!-- /.main-content -->
 
 			
 
-			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
-			</a>
+		<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+			<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+		</a>
 		</div><!-- /.main-container -->
 
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
 		<script src="assets/js/jquery-2.1.4.min.js"></script>
-	
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-		</script>
-		
-		<script src="assets/js/bootstrap.min.js"></script>
 
 		<!-- page specific plugin scripts -->
 		<script src="assets/js/jquery.dataTables.min.js"></script>
@@ -270,7 +143,11 @@
 		<script src="assets/js/buttons.html5.min.js"></script>
 		<script src="assets/js/buttons.print.min.js"></script>
 		<script src="assets/js/buttons.colVis.min.js"></script>
-		<script src="assets/js/dataTables.select.min.js"></script>		
+		<script src="assets/js/dataTables.select.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="assets/js/ace-elements.min.js"></script>
+		<script src="assets/js/ace.min.js"></script>		
 
 		<!-- inline scripts related to this page -->
 		<script type="text/javascript">
@@ -286,7 +163,8 @@
 					  null, null,null, null, null,
 					  { "bSortable": false }
 					],
-					"aaSorting": [],					
+					"aaSorting": [],
+					
 					
 					//"bProcessing": true,
 			        //"bServerSide": true,
@@ -377,13 +255,13 @@
 			
 				////
 			
-				setTimeout(function() {
+				/*setTimeout(function() {
 					$($('.tableTools-container')).find('a.dt-button').each(function() {
 						var div = $(this).find(' > div').first();
 						if(div.length == 1) div.tooltip({container: 'body', title: div.parent().text()});
 						else $(this).tooltip({container: 'body', title: $(this).text()});
 					});
-				}, 500);
+				}, 500);*/
 				
 				
 				
@@ -460,7 +338,7 @@
 			
 				/********************************/
 				//add tooltip for small view action buttons in dropdown menu
-				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				/*$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
 				
 				//tooltip placement on right or left
 				function tooltip_placement(context, source) {
@@ -474,32 +352,15 @@
 			
 					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
 					return 'left';
-				}				
+				}*/			
+				
 				
 				/***************/
 				$('.show-details-btn').on('click', function(e) {
 					e.preventDefault();
 					$(this).closest('tr').next().toggleClass('open');
 					$(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-				});
-				/***************/
-				
-				
-				
-				
-				
-				/**
-				//add horizontal scrollbars to a simple table
-				$('#simple-table').css({'width':'2000px', 'max-width': 'none'}).wrap('<div style="width: 1000px;" />').parent().ace_scroll(
-				  {
-					horizontal: true,
-					styleClass: 'scroll-top scroll-dark scroll-visible',//show the scrollbars on top(default is bottom)
-					size: 2000,
-					mouseWheelLock: true
-				  }
-				).css('padding-top', '12px');
-				*/
-			
+				});			
 			
 			})
 		</script>

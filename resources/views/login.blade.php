@@ -111,7 +111,7 @@
 
 										<div class="toolbar clearfix">
 											<div>
-												<a href="#" data-target="#forgot-box" class="forgot-password-link">
+												<a href="{{ url('/password/reset') }}" class="user-signup-link">
 													<i class="ace-icon fa fa-arrow-left"></i>
 													I forgot my password
 												</a>
@@ -140,23 +140,23 @@
 												Enter your email and to receive instructions
 											</p>
 
-											<form>
+											{!! Form::open(['route'=>'password.email', 'class' => 'form']) !!}
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control" placeholder="Email" />
+															{!! Form::text('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Enter Email']) !!}
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 													</label>
 
 													<div class="clearfix">
-														<button type="button" class="width-35 pull-right btn btn-sm btn-danger">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-danger">
 															<i class="ace-icon fa fa-lightbulb-o"></i>
 															<span class="bigger-110">Send Me!</span>
 														</button>
 													</div>
 												</fieldset>
-											</form>
+											{!! Form::close() !!}
 										</div><!-- /.widget-main -->
 
 										<div class="toolbar center">
@@ -187,20 +187,29 @@
 
 											{!! Form::open(['route'=>'signup.store', 'class' => 'form']) !!}
 												<fieldset>
+													
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															{!! Form::text('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Enter Email']) !!}
+															{!! Form::text('email', old('email'), ['class'=>'form-control', 'placeholder'=>'Email']) !!}
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
 														<span class="text-danger">{{ $errors->first('email') }}</span>
+													</label>
+
+													<label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+															{!! Form::text('phone_number', old('phone_number'), ['class'=>'form-control', 'placeholder'=>'Mobile No.']) !!}
+															<i class="ace-icon fa fa-phone"></i>
+														</span>
+														<span class="text-danger">{{ $errors->first('phone_number') }}</span>
 													</label>									
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-														{!! Form::text('user_name', old('user_name'), ['class'=>'form-control', 'placeholder'=>'Enter Username']) !!}
+														{!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Username']) !!}
 															<i class="ace-icon fa fa-user"></i>
 														</span>
-														<span class="text-danger">{{ $errors->first('user_name') }}</span>
+														<span class="text-danger">{{ $errors->first('name') }}</span>
 													</label>
 
 													<label class="block clearfix">

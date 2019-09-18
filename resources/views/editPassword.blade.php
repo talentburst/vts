@@ -44,7 +44,7 @@
 
 						<div class="col-sm-5">
 
-							{!! Form::password('old_password', old('old_password'), ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Old Password']) !!}
+							{!! Form::password('old_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Old Password']) !!}
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('old_password') }}</span>
@@ -55,7 +55,7 @@
 
 						<div class="col-sm-5">		
 
-						{!! Form::password('new_password', old('new_password'), ['class'=>'autosize-transition form-control', 'id'=>'form-field-11','placeholder'=>'New Password']) !!}
+						{!! Form::password('new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11','placeholder'=>'New Password']) !!}
 
 						</div>
 						<span class="text-danger">{{ $errors->first('new_password') }}</span>
@@ -66,7 +66,7 @@
 
 						<div class="col-sm-5">
 
-							{!! Form::password('verify_new_password', old('verify_new_password'), ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Verify New Password']) !!}
+							{!! Form::password('verify_new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Verify New Password']) !!}
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('verify_new_password') }}</span>

@@ -90,7 +90,7 @@
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-														{!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Username']) !!}
+														{!! Form::text('name', old('name'), ['class'=>'form-control', 'placeholder'=>'Full Name']) !!}
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 														<span class="text-danger">{{ $errors->first('name') }}</span>

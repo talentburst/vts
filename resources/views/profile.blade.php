@@ -37,7 +37,7 @@
 						</div>
 					</div>
 
-					@if(Session::has('success'))
+						@if(Session::has('success'))
 						   <div class="alert alert-success">
 						     {{ Session::get('success') }}
 						   </div>
@@ -51,7 +51,7 @@
 								<div>
 									<span class="profile-picture">
 									@if($users->profile_image!=NULL)
-										<img id="avatar" class="editable" alt="{{$users->name}}" src="resources/assets/images/avatars/{{$users->profile_image}}" width="180" height="200" />
+										<img id="avatar" class="editable" alt="{{$users->name}}" src="resources/assets/images/avatars/{{$users->profile_image}}" width="200" height="255" />
 									@else
 										<img id="avatar" class="editable img-responsive" alt="{{$users->profile_image}}" src="assets/images/avatars/profile-pic.jpg" />
 									@endif
@@ -109,12 +109,12 @@
 
 										<a href="{{ url('/profileImage') }}" class="btn btn-link">
 											<i class="ace-icon fa fa-user bigger-120 pink"></i>
-											Change Profile Image
+											Update Profile Image/Id Proof
 										</a>
 
-										<a href="{{ url('/editPassword') }}" class="btn btn-link">
-											<i class="ace-icon fa fa-lock bigger-125 blue"></i>
-											Update Password
+										<a href="{{ url('/editAddress') }}" class="btn btn-link">
+											<i class="ace-icon fa fa-envelope bigger-125 blue"></i>
+											Update Address
 										</a>
 									</div>
 
@@ -162,21 +162,20 @@
 									</div>
 
 									<div class="profile-info-row">
-										<div class="profile-info-name"> Role </div>
+										<div class="profile-info-name"> Title </div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="about">{{$users->role}}</span>
+											<span class="editable" id="about">{{$users->title}}</span>
 										</div>
 									</div>
 
 									<div class="profile-info-row">
-										<div class="profile-info-name"> Location </div>
+										<div class="profile-info-name"> Department </div>
 
 										<div class="profile-info-value">
-											<i class="fa fa-map-marker light-orange bigger-110"></i>
-											<span class="editable" id="country">{{$users->location}}</span>											
+											<span class="editable" id="about">{{$users->department}}</span>
 										</div>
-									</div>
+									</div>									
 
 									<div class="profile-info-row">
 										<div class="profile-info-name"> DOB </div>
@@ -187,10 +186,35 @@
 									</div>
 
 									<div class="profile-info-row">
-										<div class="profile-info-name"> Joined </div>
+										<div class="profile-info-name"> DOJ </div>
 
 										<div class="profile-info-value">
 											<span class="editable" id="signup">{{$users->doj}}</span>
+										</div>
+									</div>
+
+									<div class="profile-info-row">
+										<div class="profile-info-name"> Total Experience </div>
+
+										<div class="profile-info-value">						
+											<span class="editable" id="country">{{$users->total_exp}}</span>											
+										</div>
+									</div>
+
+									<div class="profile-info-row">
+										<div class="profile-info-name"> Relevant Expiriance </div>
+
+										<div class="profile-info-value">						
+											<span class="editable" id="country">{{$users->relevant_exp}}</span>											
+										</div>
+									</div>
+
+									<div class="profile-info-row">
+										<div class="profile-info-name"> Work Location </div>
+
+										<div class="profile-info-value">
+											<i class="fa fa-map-marker light-orange bigger-110"></i>
+											<span class="editable" id="country">{{$users->location}}</span>											
 										</div>
 									</div>
 
@@ -206,7 +230,7 @@
 
 								<div class="space-20"></div>								
 
-								<div class="hr hr2 hr-double"></div>
+								<!-- <div class="hr hr2 hr-double"></div> -->
 
 								<div class="space-6"></div>
 

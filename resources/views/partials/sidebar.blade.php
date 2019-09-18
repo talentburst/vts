@@ -24,17 +24,20 @@
 
 					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
 						<span class="btn btn-success"></span>
-
 						<span class="btn btn-info"></span>
-
 						<span class="btn btn-warning"></span>
-
 						<span class="btn btn-danger"></span>
 					</div>
 				</div><!-- /.sidebar-shortcuts -->
 
+					<?php 
+						$action = app('request')->route()->getAction();
+						$controller = class_basename($action['controller']);
+						list($controller, $action) = explode('@', $controller);
+					?>
+
 				<ul class="nav nav-list">
-					<li class="active">
+					<li class="@if($controller=='UserController' && $action=='dashboard') active @endif">
 						<a href="{{ url('/dashboard') }}">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Dashboard </span>
@@ -43,9 +46,9 @@
 						<b class="arrow"></b>
 					</li>
 
-				<li class="">
+				<li class="@if($controller=='UserController' && $action!='dashboard') active open @endif">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-tag"></i>
+							<i class="menu-icon fa fa-user"></i>
 							<span class="menu-text"> Users </span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -54,7 +57,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
+							<li class="@if($segment = Request::segment(1)=='profile') active @endif">
 								 <a href="{{ url('/profile') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									User Profile
@@ -63,7 +66,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
+							<li class="@if($action=='editPassword') active @endif">
 								<a href="{{ url('/editPassword') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Update Password
@@ -71,12 +74,11 @@
 
 								<b class="arrow"></b>
 							</li>
-
 							
 						</ul>
 					</li>
 
-					<li class="">
+					<li class="@if($controller=='TicketController') active open @endif">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> Applications </span>
@@ -87,7 +89,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-							<li class="">
+							<li class="@if($action=='newTicket') active @endif">
 								 <a href="{{ url('/newTicket') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									New Application
@@ -96,7 +98,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
+							<li class="@if($action=='getOpenTickets') active @endif">
 								<a href="{{ url('/openTickets') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Pending Applications
@@ -105,7 +107,7 @@
 								<b class="arrow"></b>
 							</li>
 
-							<li class="">
+							<li class="@if($action=='getClosedTickets') active @endif">
 								<a href="{{ url('/closedTickets') }}">
 									<i class="menu-icon fa fa-caret-right"></i>
 									Closed Applications
@@ -115,6 +117,70 @@
 							</li>
 						</ul>
 					</li>
+
+					@if(Auth::user()->email=='ekta.mendiratta@talentburst.com' || Auth::user()->email=='Arvind.singh@talentburst.com')
+
+					<li class="@if($controller=='HrAdminController' || $controller=='LeaveController') active open @endif">
+						<a href="#" class="dropdown-toggle">
+							<i class="menu-icon fa fa-list"></i>
+							<span class="menu-text"> HR Admin </span>
+
+							<b class="arrow fa fa-angle-down"></b>
+						</a>
+
+						<b class="arrow"></b>
+
+						<ul class="submenu">
+
+							<li class="@if($action=='pendingApplications') active @endif">
+								 <a href="{{ url('/pendingApplications') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Pending Applications(All) 
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="@if($action=='closedApplications') active @endif">
+								 <a href="{{ url('/closedApplications') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Closed Applications(All) 
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="@if($action=='userDetails') active @endif">
+								 <a href="{{ url('/userDetails') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									User Details
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="@if($action=='leaveDetails') active @endif">
+								<a href="{{ url('/leaveDetails') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Manage Leave
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+
+							<li class="@if($action=='leaveReports') active @endif">
+								<a href="{{ url('/leaveReports') }}">
+									<i class="menu-icon fa fa-caret-right"></i>
+									Leave Reports
+								</a>
+
+								<b class="arrow"></b>
+							</li>
+							
+						</ul>
+					</li>
+
+					 @endif
 
 					<li class="">
 						<a href="{{ url('/calendar') }}">						

@@ -14,6 +14,7 @@
 					<a href="{{ url('/home') }}" class="navbar-brand">
 						<small>
 							<!-- <i class="fa fa-leaf"></i> -->
+							<img src="resources/assets/images/avatars/tb_logo.png" alt="VTS" height="25">
 							VTS HR Admin
 						</small>
 					</a>
@@ -24,7 +25,11 @@
 					
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+							@if(Auth::user()->profile_image!=NULL)
 								<img class="nav-user-photo" src="resources/assets/images/avatars/{{Auth::user()->profile_image}}" width="36" height="36" alt="{{Auth::user()->profile_image}}" />
+							@else
+								<img class="nav-user-photo" src="assets/images/avatars/avatar5.png" alt="Jason's Photo" />
+							@endif	
 								<span class="user-info">
 									<small>Welcome,</small>
 									{{Auth::user()->name}}

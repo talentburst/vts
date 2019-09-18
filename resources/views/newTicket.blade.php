@@ -42,8 +42,28 @@
 						{!!Form::select('subject', array('' => 'Please Select', 'Application for PL' => 'Application for PL', 'Application for SL' => 'Application for SL'), null, ['class' => 'col-xs-10 col-sm-5','id' => 'form-field-1']) !!}				
 						
                            <span class="text-danger">{{ $errors->first('subject') }}</span>
-						</div>
+						</div>						
+					</div>
+
+					<div class="form-group {{ $errors->has('leave_days') ? 'has-error' : '' }}">
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('leave_days') ? 'has-error' : '' }}" for="form-field-1"> Leave Days </label>
+
+						<div class="col-sm-9">
+
+						{!! Form::number('leave_days', '', ['min'=>0.50, 'class'=>'col-xs-10 col-sm-5', 'id'=>'form-field-1', 'step'=>'any', 'placeholder'=>'Number of days to be taken']) !!}				
 						
+                           <span class="text-danger">{{ $errors->first('leave_days') }}</span>
+						</div>						
+					</div>
+
+					<div class="form-group {{ $errors->has('from_date') ? 'has-error' : '' }}">
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('from_date') ? 'has-error' : '' }}" for="form-field-1"> Effective From </label>
+
+						<div class="col-sm-9">
+
+						{!! Form::date('from_date', '', ['class'=>'col-xs-10 col-sm-5', 'id'=>'form-field-1', 'placeholder'=>'Leave Effective From date']) !!}			
+                           <span class="text-danger">{{ $errors->first('from_date') }}</span>
+						</div>						
 					</div>
 
 					<div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
@@ -51,7 +71,7 @@
 
 						<div class="col-sm-6">
 							
-							{!! Form::textarea('message', old('message'), ['id'=>'form-field-11','class'=>'autosize-transition form-control', 'placeholder'=>'Enter Message']) !!}
+							{!! Form::textarea('message', old('message'), ['id'=>'form-field-11','class'=>'autosize-transition form-control', 'rows' => 5, 'cols' => 40, 'placeholder'=>'Enter Message']) !!}
 
 						</div>
 						<span class="text-danger">{{ $errors->first('message') }}</span>
@@ -62,7 +82,7 @@
 
 						<div class="col-sm-6">
 							
-							{!! Form::textarea('remark', old('remark'), ['id'=>'form-field-11','class'=>'autosize-transition form-control', 'placeholder'=>'Enter Remark']) !!}							
+							{!! Form::textarea('remark', old('remark'), ['id'=>'form-field-11','class'=>'autosize-transition form-control', 'rows' => 5, 'cols' => 40, 'placeholder'=>'Enter Remark']) !!}		
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('remark') }}</span>

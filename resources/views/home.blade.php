@@ -19,7 +19,7 @@
                     Dashboard
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
-                        Leave Details
+                        Current Year Leave Details
                     </small>
                 </h1>
             </div><!-- /.page-header -->
@@ -30,11 +30,14 @@
                     <div class="row">
                         <div class="space-6"></div>
 
-                        <?php //var_dump($leaves); exit; ?>
-
-                   
+                        <?php //var_dump($leaves); exit; ?>                   
 
                         <div class="col-sm-7 infobox-container">
+                            <h4 class="widget-title lighter" align="left">
+                                <i class="ace-icon fa fa-star orange"></i>
+                                Leaves on account 
+                            </h4>
+                            <br>
                             <div class="infobox infobox-green">
                                <!--  <div class="infobox-icon">
                                     <i class="ace-icon fa fa-comments"></i>
@@ -134,19 +137,19 @@
                                 </div>
 
                                 <div class="infobox-data">
-                                    <div class="infobox-content">Earnings</div>
-                                    <div class="infobox-content">$32,000</div>
+                                    <div class="infobox-content"> Leaves</div>
+                                    <div class="infobox-content">{{$leaves->paid_leave + $leaves->sick_leave}}</div>
                                 </div>
                             </div>
 
                             <div class="infobox infobox-grey infobox-small infobox-dark">
                                 <div class="infobox-icon">
-                                    <i class="ace-icon fa fa-download"></i>
+                                    <i class="ace-icon fa fa-envelope"></i>
                                 </div>
 
                                 <div class="infobox-data">
-                                    <div class="infobox-content">Downloads</div>
-                                    <div class="infobox-content">1,205</div>
+                                    <div class="infobox-content">Applications</div>
+                                    <div class="infobox-content">{{$applications}}</div>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +164,7 @@
                                 <div class="widget-header widget-header-flat">
                                     <h4 class="widget-title lighter">
                                         <i class="ace-icon fa fa-star orange"></i>
-                                        Tickets
+                                        Applications
                                     </h4>
 
                                     <div class="widget-toolbar">
@@ -177,11 +180,16 @@
                                             <thead class="thin-border-bottom">
                                                 <tr>
                                                     <th>
-                                                        <i class="ace-icon fa fa-caret-right blue"></i>Ticket Id
+                                                        <i class="ace-icon fa fa-caret-right blue"></i>Application Id
                                                     </th>
 
                                                     <th>
                                                         <i class="ace-icon fa fa-caret-right blue"></i>Subject
+                                                    </th>
+
+                                                    <th>
+                                                        <i class="ace-icon fa fa-clock-o"></i>
+                                                            Date
                                                     </th>
 
                                                     <th class="hidden-480">
@@ -195,16 +203,12 @@
                                                 @foreach ($tickets as $ticket)
 
                                                 <tr>
-                                                    <td>#{{$ticket->ticket_id}}</td>
-                                                    <td>{{$ticket->subject}}</td>
+                                                    <td><a class="blue" href ="viewApplication/{{ $ticket->ticket_id }}" title="View Application">               #{{$ticket->ticket_id}}
+                                                    </a></td>
+                                                    <td>{{substr($ticket->subject,15)}} | {{$ticket->leave_no}} Days</td>
+                                                    <td>{{$ticket->created_at->format('d/m/Y')}}</td>
                                                     <td class="hidden-480">
-                                                    @if($ticket->status == 0)
-                                                        <span class="label label-danger arrowed">Pending</span>
-                                                    @elseif($ticket->status == 1)
-                                                        <span class="label label-success arrowed-in arrowed-in-right">Approved</span>
-                                                    @else
-                                                        <span class="label label-warning arrowed arrowed-right">Rejected</span>
-                                                    @endif
+                                                        <span class="label label-success arrowed">{{$ticket->status_name}}</span>             
                                                     </td>
                                                 </tr>
 
