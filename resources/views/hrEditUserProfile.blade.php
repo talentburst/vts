@@ -54,7 +54,7 @@
 				{!! Form::open(array('action' => array('UserController@editUserProfile', $users->user_id), 'class' => 'form-horizontal')) !!}
 
 				<div class="form-group {{ $errors->has('Full Name') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Full Name: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Full Name : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('name', $users->name, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'readonly'=>'readonly']) !!}							
@@ -63,7 +63,7 @@
 					</div>					
 
 					<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Email Id: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Email Id : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('name', $users->email, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'readonly'=>'readonly']) !!}
@@ -72,7 +72,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Contact No.: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Contact No. : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('phone_number', $users->phone_number, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Phone Number']) !!}
@@ -81,7 +81,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('name') ? 'has-error' : '' }}" for="form-field-1"> Employee Id: </label>
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('name') ? 'has-error' : '' }}" for="form-field-1"> Employee Id : </label>
 
 						<div class="col-sm-5">	
 						{!! Form::text('employee_id', $users->emp_id, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11','placeholder'=>'Employee Id']) !!}
@@ -90,7 +90,7 @@
 					</div>				
 
 					<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Title: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Title : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('title', $users->title, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Your Role']) !!}	
@@ -99,7 +99,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Department : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('department', $users->department, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Your Department']) !!}
@@ -109,7 +109,7 @@
 
 
 					<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> DOB: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> DOB : </label>
 
 						<div class="col-sm-5">
 							{!! Form::date('dob', $users->dob, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Date of Birth']) !!}							
@@ -118,7 +118,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('doj') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> DOJ: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> DOJ : </label>
 
 						<div class="col-sm-5">
 							{!! Form::date('doj', $users->doj, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Date of Joining']) !!}							
@@ -127,7 +127,7 @@
 					</div>					
 
 					<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Total Experience: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Total Experience : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('total_exp', $users->total_exp, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Total Experience']) !!}
@@ -136,7 +136,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('relevant_exp') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Relevant Expiriance:</label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Relevant Expiriance :</label>
 
 						<div class="col-sm-5">
 							{!! Form::text('relevant_exp', $users->relevant_exp, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Relevant Experience']) !!}							
@@ -145,7 +145,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Work Location: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Work Location : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('location', $users->location, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Work Location']) !!}
@@ -154,7 +154,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('emp_ctc') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> CTC: </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> CTC : </label>
 
 						<div class="col-sm-5">
 							{!! Form::text('emp_ctc', $users->emp_ctc, ['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter CTC']) !!}

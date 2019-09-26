@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 use App\UsersActivityLog;
-use App\usersLoginsLog;
+use App\UsersLoginsLog;
 use App\Address;
 use App\Profile;
 use App\Leaves;

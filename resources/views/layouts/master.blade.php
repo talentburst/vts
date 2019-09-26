@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <base href="{{URL::asset('/')}}" target="_top"> 
+
 <link rel="stylesheet" href="{{{ URL::asset('assets/css/bootstrap.min.css')}}}" />
 <link rel="stylesheet" href="{{{ URL::asset('assets/font-awesome/4.5.0/css/font-awesome.min.css')}}}" />
 <link rel="stylesheet" href="{{{ URL::asset('assets/css/fonts.googleapis.com.css')}}}" />
-<script src="{{{ URL::asset('assets/js/bootstrap.min.js')}}}"></script>
+<link rel="stylesheet" href="{{{ URL::asset('assets/css/ace.min.css')}}}" />
 <script src="{{{ URL::asset('assets/js/jquery-2.1.4.min.js')}}}"></script>  
  
 <body class="no-skin">

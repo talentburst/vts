@@ -33,6 +33,8 @@
 		     {{ Session::get('success') }}
 		   </div>
 		@endif
+		
+		{{{ URL::asset('/') }}}
 
 		<div class="row">
 			<div class="col-xs-12">				
@@ -40,39 +42,37 @@
 				 {!! Form::open(array('action' => array('UserController@editUserPass','1'), 'class' => 'form-horizontal')) !!}				
 
 					<div class="form-group {{ $errors->has('old_password') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Old Password </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Old Password : </label>
 
 						<div class="col-sm-5">
 
-							{!! Form::password('old_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Enter Old Password']) !!}
+							{!! Form::password('old_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-1', 'placeholder'=>'Enter Old Password']) !!}
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('old_password') }}</span>
 					</div>
 
 					<div class="form-group {{ $errors->has('new_password') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> New Password </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> New Password : </label>
 
 						<div class="col-sm-5">		
 
-						{!! Form::password('new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11','placeholder'=>'New Password']) !!}
+						{!! Form::password('new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-2','placeholder'=>'New Password']) !!}
 
 						</div>
 						<span class="text-danger">{{ $errors->first('new_password') }}</span>
 					</div>
 
 					<div class="form-group {{ $errors->has('verify_new_password') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Verify New Password </label>
+						<label class="col-sm-3 control-label no-padding-right" for="form-field-1-1"> Verify New Password :</label>
 
 						<div class="col-sm-5">
 
-							{!! Form::password('verify_new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-11', 'placeholder'=>'Verify New Password']) !!}
+							{!! Form::password('verify_new_password',['class'=>'autosize-transition form-control', 'id'=>'form-field-3', 'placeholder'=>'Verify New Password']) !!}
 							
 						</div>
 						<span class="text-danger">{{ $errors->first('verify_new_password') }}</span>
-					</div>
-
-					
+					</div>					
 
 					<div class="clearfix form-actions">
 						<div class="col-md-offset-3 col-md-9">

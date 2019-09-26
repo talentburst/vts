@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Mailers\AppMailer;
 use App\UsersActivityLog;
 use App\CrDrLeaves;
 use App\Address;
@@ -13,7 +14,6 @@ use App\Tickets;
 use App\Status;
 use App\User;
 use App\Leaves;
-use Mail;
 
 use App\Exports;
 use Maatwebsite\Excel\Facades\Excel;
@@ -23,7 +23,7 @@ class HrAdminController extends Controller
 {
 	public function pendingApplications()
 	{
-	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.created_at','users.name','users.email','status.status_name')
+	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.status','ticket_details.created_at','users.name','users.email','status.status_name')
 	    ->join('users','users.id','=','ticket_details.user_id')
 	    ->join('status','status.id','=','ticket_details.status')
 	    ->whereIn('ticket_details.status', [1, 5])
@@ -99,6 +99,13 @@ class HrAdminController extends Controller
 	          'activity' => $activityJson
 	        );
       		UsersActivityLog::create($logData);
+
+      		// send reply mail 
+
+			/*if($ticketResp) {			    
+			    $mailer->replyTicket(Auth::user(), $ticket);
+			}*/
+
 	   		return redirect('closedApplications')->with('success', 'Ticket details updated successfully.');
 		}
 		else
@@ -109,7 +116,7 @@ class HrAdminController extends Controller
 
 	public function closedApplications()
 	{
-	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.responce','ticket_details.created_at','ticket_details.responce_at','users.name','users.email','status.status_name')
+	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.status','ticket_details.responce','ticket_details.created_at','ticket_details.responce_at','users.name','users.email','status.status_name')
 	    ->join('users','users.id','=','ticket_details.user_id')
 	    ->join('status','status.id','=','ticket_details.status')
 	    ->whereNotIn('ticket_details.status', [1, 5])	   

@@ -2,15 +2,15 @@
 @section('content')
 
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-			<ul class="breadcrumb">
-				<li>
-					<i class="ace-icon fa fa-home home-icon"></i>
-					 <a href="{{ url('/dashboard') }}">Home</a>
-				</li>
-				<li class="active">User Profile</li>
-			</ul><!-- /.breadcrumb -->			
+	<ul class="breadcrumb">
+		<li>
+			<i class="ace-icon fa fa-home home-icon"></i>
+			 <a href="{{ url('/dashboard') }}">Home</a>
+		</li>
+		<li class="active">User Profile</li>
+	</ul><!-- /.breadcrumb -->			
 
-		</div>
+</div>
 
 		<div class="page-content">
 			<div class="page-header">
@@ -133,7 +133,7 @@
 										<div class="profile-info-name"> Employee Id</div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="username">#{{$users->emp_id}}</span>
+											<span class="editable" id="username"><b>#{{$users->emp_id}}</b></span>
 										</div>
 									</div>
 
@@ -237,11 +237,7 @@
 								
 							</div>
 						</div>
-					</div>
-
-					
-
-					
+					</div>					
 
 					<!-- PAGE CONTENT ENDS -->
 				</div><!-- /.col -->

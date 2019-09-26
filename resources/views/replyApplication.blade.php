@@ -70,7 +70,7 @@
 					</div>
 
 					<div class="form-group {{ $errors->has('from_date') ? 'has-error' : '' }}">
-						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('from_date') ? 'has-error' : '' }}" for="form-field-1"> Effective From </label>
+						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('from_date') ? 'has-error' : '' }}" for="form-field-1"> Leave Effective From </label>
 
 						<div class="col-sm-9">
 

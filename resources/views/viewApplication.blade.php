@@ -142,7 +142,8 @@
 										<div class="profile-info-name"> Status </div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="signup">{{$tickets->status_name}}</span>
+											<span class="editable" id="signup">
+											<b>	{{$tickets->status_name}}</b></span>
 										</div>
 									</div>
 

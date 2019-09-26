@@ -15,11 +15,11 @@ class CronController extends Controller
 		$users = User::select('id')
 		->where('status', '=', 1)
 	    ->get();
+		$pl_days=1.25;
+		$sl_days=0.50;
 
 	    foreach ($users as $user) {
-		    $user_id = $user->id;
-		    $pl_days=1.25;
-		    $sl_days=0.50;		
+		    $user_id = $user->id;   		
 
 			$ceditDataPL = array(  
 				'user_id' => $user_id,

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Mailers\AppMailer;
 use App\UsersActivityLog;
 use App\CrDrLeaves;
 use App\Tickets;
 use App\Status;
 use App\Leaves;
-use Mail;
 
 class TicketController extends Controller
 {
@@ -21,7 +21,7 @@ class TicketController extends Controller
 
 	public function getOpenTickets()
 	{
-	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.created_at','users.name','users.email','status.status_name')
+	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.status','ticket_details.created_at','users.name','users.email','status.status_name')
 	    ->join('users','users.id','=','ticket_details.user_id')
 	    ->join('status','status.id','=','ticket_details.status')
 	    ->where('ticket_details.user_id', '=', Auth::user()->id)
@@ -33,7 +33,7 @@ class TicketController extends Controller
 
 	public function getClosedTickets()
 	{
-	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.responce','ticket_details.created_at','ticket_details.responce_at','users.name','users.email','status.status_name')
+	    $tickets = Tickets::select('ticket_details.id','ticket_details.ticket_id','ticket_details.subject','ticket_details.leave_no','ticket_details.message','ticket_details.status','ticket_details.responce','ticket_details.created_at','ticket_details.responce_at','users.name','users.email','status.status_name')
 	    ->join('users','users.id','=','ticket_details.user_id')
 	    ->join('status','status.id','=','ticket_details.status')
 	    ->where('ticket_details.user_id', '=', Auth::user()->id)
@@ -43,7 +43,7 @@ class TicketController extends Controller
 	    return view('closedTickets',['tickets'=>$tickets]);
 	}
 
-	public function saveTicketData(Request $request)
+	public function saveTicketData(Request $request, AppMailer $mailer)
 	{
 	   $this->validate($request, [	    
 	    'subject'=>'required|min:10',
@@ -75,20 +75,18 @@ class TicketController extends Controller
         );
 
 		UsersActivityLog::create($logData);
-	    Tickets::create($ticketData);
+	    $ticket = Tickets::create($ticketData);
 
-	   /*Mail::send('email',
-       array(
-           'name' => $request->get('name'),
-           'email' => $request->get('email'),
-           'user_message' => $request->get('message')
-       ), function($message)
-	   {
-	       $message->from('Arvind.asarvindsingh1@gmail.com');
-	       $message->to('Arvind.asarvindsingh1@gmail.com', 'Admin')->subject('Feedback');
-	   });*/
+	   // send mail 
+
+	    $ticketOwner = 'ekta.mendiratta@talentburst.com';
+
+        /*if($ticket) {
+            $mailer->sendTicketInformation(Auth::user(), $ticket);
+            $mailer->sendTicketInformationHr(Auth::user(), $ticketOwner, $ticket);
+        }*/
 	   
-	   return redirect('openTickets')->with('success', 'Thanks for contacting us, we will reply you soon..');
+	   return redirect('openTickets')->with("success", "Your apllication with ID: #$ticket->ticket_id has been created, we will reply you soon..");
 	}
 
 	public function editTicket($id)
@@ -123,8 +121,8 @@ class TicketController extends Controller
         );
 
 		UsersActivityLog::create($logData);	  
-	   Tickets::where('ticket_id', '=', $id)->update($ticketData);
-	   return redirect('openTickets')->with('success', 'Apllication details updated successfully.');
+	    Tickets::where('ticket_id', '=', $id)->update($ticketData);
+	    return redirect('openTickets')->with('success', 'Apllication details updated successfully.');
 	}
 
 	public function deleteTicket($id)
@@ -136,7 +134,7 @@ class TicketController extends Controller
 
 	    //Tickets::where('ticket_id', '=', $id)->delete();
 	    Tickets::where('ticket_id', '=', $id)->update($ticketData);
-	    return redirect('closedTickets')->with('success', 'Ticket deleted successfully.');
+	    return redirect('closedTickets')->with('success', "Apllication Id #$id has been deleted successfully.");
 	}	
 
 }

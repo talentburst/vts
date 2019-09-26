@@ -48,6 +48,13 @@ Route::post('editProfileImage/{id}', ['middleware' => 'auth', 'uses' => 'UserCon
 Route::get('editAddress', ['middleware' => 'auth', 'uses' => 'UserController@getUserAddress']);
 Route::post('editUserAddress/{id}', ['middleware' => 'auth', 'uses' => 'UserController@editUserAddress']);
 
+// Password Reset Routes...
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset.token');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 // Ticket Routes
 
 Route::get('newTicket', ['middleware' => 'auth', 'uses' => 'TicketController@newTicket']);
@@ -78,24 +85,16 @@ Route::get('userDetails', ['middleware' => 'auth', 'uses' => 'HrAdminController@
 Route::get('delUser/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@deleteUser']);
 Route::get('editUser/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@editUserStatus']);
 
-//Leave Route
+//Leave Routes
 
 Route::get('leaveDetails', ['middleware' => 'auth', 'uses' => 'LeaveController@leaveDetails']);
 Route::get('editLeave/{id}', ['middleware' => 'auth', 'uses' => 'LeaveController@editLeave']);
 Route::post('editUserLeave/{id}', ['middleware' => 'auth', 'uses' => 'LeaveController@editLeaveData']);
 
-//Reports Route
+//Reports Routes
 
 Route::get('leaveReports', ['middleware' => 'auth', 'uses' => 'LeaveController@leaveReports']);
 Route::post('exports/{id}', ['middleware' => 'auth', 'uses' => 'LeaveController@exports']);
-
-
-// Password Reset Routes...
-
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset.token');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 //Calendar Route

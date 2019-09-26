@@ -43,11 +43,12 @@
 						<div class="login-container">
 							<div class="center">
 								<h1>
-									<!-- <i class="ace-icon fa fa-leaf green"></i> -->
+									<img id="avatar" class="editable img-responsive" alt="TalentBurst" src="resources/assets/images/avatars/tb_logo_green.png"/> 
+
 									<span class="red">VTS</span>
 									<span class="white" id="id-text2">Application</span>
 								</h1>
-								<h3 class="blue" id="id-company-text">&copy; TalentBurst</h3>
+								<!-- <h3 class="blue" id="id-company-text">&copy; TalentBurst</h3> -->
 							</div>
 
 							<div class="space-6"></div>

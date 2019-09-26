@@ -118,7 +118,7 @@
 						</ul>
 					</li>
 
-					@if(Auth::user()->email=='ekta.mendiratta@talentburst.com' || Auth::user()->email=='Arvind.singh@talentburst.com')
+					@if(Auth::user()->is_admin==1)
 
 					<li class="@if($controller=='HrAdminController' || $controller=='LeaveController') active open @endif">
 						<a href="#" class="dropdown-toggle">
