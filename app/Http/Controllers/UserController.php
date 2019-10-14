@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 use App\UsersActivityLog;
+use App\Departments;
 use App\UsersLoginsLog;
 use App\Address;
 use App\Profile;
@@ -268,8 +269,9 @@ class UserController extends Controller
 
 	public function userProfile()
 	{
-		$users = User::select('users.id','emp_id','name','email','users.phone_number','dob','doj','title','department','total_exp','relevant_exp','location','users.profile_image','status','last_login')
+		$users = User::select('users.id','emp_id','name','email','users.phone_number','dob','doj','title','dept_name','total_exp','relevant_exp','location','users.profile_image','users.status','last_login')
 		->join('users_profile','users.id','=','users_profile.user_id')
+		->leftJoin('departments','departments.id','=','users_profile.department')
 		->where('user_id', '=', Auth::user()->id)
 	    ->first();
 		return view('profile',['users'=>$users]);		
@@ -280,7 +282,8 @@ class UserController extends Controller
 		$users = Profile::select('user_id','emp_id','emp_ctc','phone_number','dob','doj','title','department','total_exp','relevant_exp','location')
 		->where('id', '=', Auth::user()->id)
 	    ->first();
-		return view('editProfile',['users'=>$users]);		
+		$departments = Departments::select('id','dept_name')->where('status', '=', 1)->get();
+		return view('editProfile',['users'=>$users, 'departments'=>$departments]);		
 	}
 
 	public function editUserProfile(Request $request, $id)
@@ -319,9 +322,16 @@ class UserController extends Controller
           'activity' => $activityJson
         );
 		
-		$user = User::where('id', '=', $user_id)->update(['is_profile' => 1]);
+		$adminData = array(		  
+          'is_profile' => 1,
+		  'is_hr_admin' => ($request->input('is_hr_admin')) ? $request->input('is_hr_admin') : Auth::user()->is_hr_admin,
+          'is_dept_manager' => ($request->input('is_dept_manager')) ? $request->input('is_dept_manager') : Auth::user()->is_dept_manager,
+		  'reporting_to' => ($request->input('reporting_to')) ? $request->input('reporting_to') : Auth::user()->reporting_to,
+        );
+		
+		$user = User::where('id', '=', $user_id)->update($adminData);
 	  	$userProfile = Profile::where('user_id', '=', $user_id)->update($userData);
-	  	if($userProfile)
+	  	if($userProfile || $user)
 	  	{
 	  		UsersActivityLog::create($logData);
 	  		return back()->with('success', 'Profile updated successfully.');	
@@ -377,12 +387,12 @@ class UserController extends Controller
 	public function profileImage()
 	{
 		$user = Profile::select('user_id','aadhar_no','pan_no','aadhar_image','pan_image','profile_image','location')
-		->where('id', '=', Auth::user()->id)
+		->where('user_id', '=', Auth::user()->id)
 	    ->first();	  
 	   return view('profileImage',['user'=>$user]);	
 	}
 
-	public function editProfileImage(Request $request)
+	public function editProfileImage($id, Request $request)
 	{
 	    $this->validate($request, [
 	    'aadhar_no' => 'required|unique:users_profile',
@@ -393,7 +403,7 @@ class UserController extends Controller
 	    ]); 
 
 	    $user = Profile::select('aadhar_no','pan_no','aadhar_image','pan_image','profile_image')
-		->where('id', '=', Auth::user()->id)
+		->where('user_id', '=', $id)
 	    ->first();
 
 	    if ($files = $request->file('aadhar_image')) {
@@ -404,27 +414,27 @@ class UserController extends Controller
 			$insert['aadhar_image'] = "$aadharImage";			
         }
 
-        if ($files = $request->file('pan_image')) {
+        if ($files2 = $request->file('pan_image')) {			
 			@unlink('resources/assets/images/pancard/'.$user->pan_image); 
 			$panPath = 'resources/assets/images/pancard/'; // upload path
-			$panImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-			$files->move($panPath, $panImage);
+			$panImage = date('YmdHis') . "." . $files2->getClientOriginalExtension();
+			$files2->move($panPath, $panImage);
 			$insert['pan_image'] = "$panImage";			
         }
 
-        if ($files = $request->file('image')) {
+        if ($files3 = $request->file('image')) {			 
 			@unlink('resources/assets/images/avatars/'.$user->profile_image); 
 			$imagePath = 'resources/assets/images/avatars/'; // upload path
-			$profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-			$files->move($imagePath, $profileImage);
+			$profileImage = date('YmdHis') . "." . $files3->getClientOriginalExtension();
+			$files3->move($imagePath, $profileImage);
 			$insert['image'] = "$profileImage";			
         }
 
 	    $profileData = array(
 	    	'aadhar_no' => $request->input('aadhar_no'),
 	    	'pan_no' => $request->input('pan_no'),
-	    	'aadhar_image' => $profileImage,
-	    	'pan_image' => $profileImage,						      
+	    	'aadhar_image' => $aadharImage,
+	    	'pan_image' => $panImage,						      
 			'profile_image' => $profileImage         
 			);
 
@@ -434,12 +444,12 @@ class UserController extends Controller
 			'profile_image' => $profileImage         
 		);
 
-           $profile = Profile::where('id', '=', Auth::user()->id)->update($profileData); 
-           $user = User::where('id', '=', Auth::user()->id)->update($userData);              
+           $profile = Profile::where('user_id', '=', $id)->update($profileData); 
+           $user = User::where('id', '=', $id)->update($userData);              
         
-        if ($profile ) {
-        		$user_id = Auth::user()->id;
-        	    $activityJson = json_encode($userData);
+        if ($profile) {
+        		$user_id = $id;
+        	    $activityJson = json_encode($profileData);
 		        $logData = array(		  
 		          'user_id' => Auth::user()->id,
 		          'log' => "User @$user_id profile image/id proof updated",
@@ -464,7 +474,7 @@ class UserController extends Controller
 		return view('editAddress',['users'=>$users]);		
 	}
 
-	public function editUserAddress(Request $request)
+	public function editUserAddress($id, Request $request)
 	{
 	    $this->validate($request, [
 	    'address' => 'required',
@@ -473,6 +483,8 @@ class UserController extends Controller
 	    'country'=>'required',
 	    'pincode'=>'required|min:6|max:6'
 	    ]);
+		
+		$is_same_address = $request->input('is_same_address');
 
 	    $userData = array(	      
           'address' => $request->input('address'),
@@ -480,10 +492,10 @@ class UserController extends Controller
           'state' => $request->input('state'),
           'country' => $request->input('country'),
           'pincode' => $request->input('pincode'),
-          'landmark' => $request->input('landmark')
-        ); 
+          'landmark' => $request->input('landmark'),
+		  'is_same_address' => ($is_same_address) ? 1 : 0
 
-	    $is_same_address = $request->input('is_same_address');
+        );	    
 
 	    if($is_same_address==1)
 	    {
@@ -530,8 +542,8 @@ class UserController extends Controller
           'activity' => $activityJson
         );        
           
-        $user = User::where('id', '=', Auth::user()->id)->update(['is_address' => 1]);
-        $userAddress = Address::where('id', '=', Auth::user()->id)->update($userData);        
+        $user = User::where('id', '=', $id)->update(['is_address' => 1]);
+        $userAddress = Address::where('user_id', '=', $id)->update($userData);        
         if($user && $userAddress)
         {
         	UsersActivityLog::create($logData);

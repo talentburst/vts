@@ -133,7 +133,7 @@
 										<div class="profile-info-name"> Employee Id</div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="username">#{{$users->emp_id}}</span>
+											<span class="editable" id="username"><b>#{{$users->emp_id}}</b></span>
 										</div>
 									</div>
 
@@ -173,7 +173,7 @@
 										<div class="profile-info-name"> Department </div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="about">{{$users->department}}</span>
+											<span class="editable" id="about">{{$users->dept_name}}</span>
 										</div>
 									</div>									
 

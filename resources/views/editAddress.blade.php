@@ -189,7 +189,7 @@
 					<div class="form-group {{ $errors->has('is_same_address') ? 'has-error' : '' }}">
 						<label class="col-sm-4 control-label no-padding-right">
 							 Permanent & Current address are same:
-							 {!! Form::checkbox('is_same_address',1,false, array('class'=>'autosize-transition form-control ace ace-switch ace-switch-5 form-control','id'=>'is_same_address')) !!} 
+							 {!! Form::checkbox('is_same_address',1,($users->is_same_address) ? true : false, array('class'=>'autosize-transition form-control ace ace-switch ace-switch-5 form-control','id'=>'is_same_address')) !!} 
 							 <span class="lbl middle"></span> 	
 						</label>						
 						<span class="text-danger">{{ $errors->first('is_same_address') }}</span>

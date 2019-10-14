@@ -46,7 +46,7 @@
 						</button>
 					</div>
 
-					{!! Form::open(array('action' => array('UserController@editProfileImage', Auth::user()->id), 'class' => 'form-horizontal', 'id' => 'dropzone', 'enctype' => 'multipart/form-data')) !!}
+					{!! Form::open(array('action' => array('UserController@editProfileImage', $user->user_id), 'class' => 'form-horizontal', 'id' => 'dropzone', 'enctype' => 'multipart/form-data')) !!}
 
 					<div class="form-group {{ $errors->has('aadhar_no') ? 'has-error' : '' }}">
 						<label class="col-sm-3 control-label no-padding-right {{ $errors->has('aadhar_no') ? 'has-error' : '' }}" for="form-field-1"> Aadhar Card Number </label>
@@ -128,7 +128,7 @@
 					<div align="center">
 						<span class="profile-picture" style="margin: 5px;">
 						@if($user->profile_image!=NULL)
-							<a href="resources/assets/images/avatars/{{$user->profile_image}}" target="_blank"><img id="avatar" class="editable" title="{{$user->name}}" alt="{{$user->aadhar_no}}" src="resources/assets/images/avatars/{{$user->profile_image}}" width="180" height="200" /></a>									
+							<a href="resources/assets/images/avatars/{{$user->profile_image}}" target="_blank"><img id="avatar" class="editable" title="Employee Id - #{{$user->emp_id}}" alt="{{$user->aadhar_no}}" src="resources/assets/images/avatars/{{$user->profile_image}}" width="180" height="200" /></a>									
 						@endif
 						</span>
 						<span class="profile-picture" style="margin: 5px;">

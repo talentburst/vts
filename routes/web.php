@@ -58,7 +58,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 // Ticket Routes
 
 Route::get('newTicket', ['middleware' => 'auth', 'uses' => 'TicketController@newTicket']);
-Route::post('saveTicket', ['as'=>'saveticket.store','uses'=>'TicketController@saveTicketData']);
+Route::post('saveTicket', ['as'=>'saveticket.store','uses'=> 'TicketController@saveTicketData']);
 Route::get('openTickets', ['middleware' => 'auth', 'uses' => 'TicketController@getOpenTickets']);
 Route::get('editTicket/{id}', ['middleware' => 'auth', 'uses' => 'TicketController@editTicket']);
 Route::post('editTicketData/{id}', ['middleware' => 'auth', 'uses' => 'TicketController@editTicketData']);
@@ -72,15 +72,10 @@ Route::get('replyApplication/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminC
 Route::post('replyApplicationData/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@replyApplicationData']);
 Route::get('closedApplications', ['middleware' => 'auth', 'uses' => 'HrAdminController@closedApplications']);
 Route::get('viewApplication/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@viewApplication']);
-
 Route::get('hrViewUserProfile/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@hrViewUserProfile']);
-
 Route::get('hrEditUserProfile/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@hrEditUserProfile']);
-
 Route::get('hrUserProfileIdImage/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@hrUserProfileIdImage']);
-
 Route::get('hrEditUserAddress/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@hrEditUserAddress']);
-
 Route::get('userDetails', ['middleware' => 'auth', 'uses' => 'HrAdminController@userDetails']);
 Route::get('delUser/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@deleteUser']);
 Route::get('editUser/{id}', ['middleware' => 'auth', 'uses' => 'HrAdminController@editUserStatus']);

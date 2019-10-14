@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Mailers\AppMailer;
 use App\UsersActivityLog;
+use App\Departments;
 use App\CrDrLeaves;
 use App\Address;
 use App\Profile;
@@ -34,7 +35,7 @@ class HrAdminController extends Controller
 
 	public function replyApplication($id)
 	{
-	    $ticket = Tickets::select('id','user_id','ticket_id','subject','leave_no','from_date','message','responce','remark')
+	    $ticket = Tickets::select('id','user_id','ticket_id','subject','leave_no','from_date','message','responce','remark','status')
 	    ->where('ticket_id', '=', $id)
 	    ->whereIn('status', [1, 5])
 	    ->first(); 
@@ -181,8 +182,9 @@ class HrAdminController extends Controller
 
 	public function hrViewUserProfile($id)
 	{
-		$users = User::select('users.id','emp_id','name','email','users.phone_number','dob','doj','title','department','total_exp','relevant_exp','location','users.profile_image','status','last_login')
+		$users = User::select('users.id','emp_id','name','email','users.phone_number','dob','doj','title','dept_name','total_exp','relevant_exp','location','users.profile_image as profile_image','users.status','last_login')
 		->join('users_profile','users.id','=','users_profile.user_id')
+		->leftJoin('departments','departments.id','=','users_profile.department')
 		->where('users.id', '=', $id)
 	    ->first();
 		return view('hrViewUserProfile',['users'=>$users]);		
@@ -190,17 +192,19 @@ class HrAdminController extends Controller
 
 	public function hrEditUserProfile($id)
 	{
-		$users = User::select('user_id','emp_id','emp_ctc','name','email','users.phone_number','dob','doj','title','department','total_exp','relevant_exp','location')
+		$users = User::select('user_id','emp_id','emp_ctc','name','email','users.phone_number','reporting_to','is_dept_manager','is_hr_admin','dob','doj','title','department','total_exp','relevant_exp','location')
 		->join('users_profile','users.id','=','users_profile.user_id')
 		->where('users.id', '=', $id)
 	    ->first();
-		return view('hrEditUserProfile',['users'=>$users]);		
+		$departments = Departments::select('id','dept_name')->where('status', '=', 1)->get();
+		$deptManagers = User::select('id','name')->where('status', '=', 1)->where('is_dept_manager', '=', 1)->where('id', '<>', $id)->get();
+		return view('hrEditUserProfile',['users'=>$users, 'departments'=>$departments, 'deptManagers'=>$deptManagers]);		
 	}
 
 	public function hrUserProfileIdImage($id)
 	{
-		$user = Profile::select('user_id','aadhar_no','pan_no','aadhar_image','pan_image','profile_image','location')
-		->where('id', '=', $id)
+		$user = Profile::select('user_id','emp_id','aadhar_no','pan_no','aadhar_image','pan_image','profile_image','location')
+		->where('user_id', '=', $id)
 	    ->first();	  
 	   return view('hrUserProfileIdImage',['user'=>$user]);	
 	}
@@ -208,7 +212,7 @@ class HrAdminController extends Controller
 	public function hrEditUserAddress($id)
 	{
 		$users = Address::select('user_id','address','city','state','country','pincode','landmark','cur_address','cur_city','cur_state','cur_country','cur_pincode','cur_landmark','is_same_address')
-		->where('id', '=', $id)
+		->where('user_id', '=', $id)
 	    ->first();
 		return view('hrEditUserAddress',['users'=>$users]);		
 	}		

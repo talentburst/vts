@@ -33,8 +33,6 @@
 		     {{ Session::get('success') }}
 		   </div>
 		@endif
-		
-		{{{ URL::asset('/') }}}
 
 		<div class="row">
 			<div class="col-xs-12">				

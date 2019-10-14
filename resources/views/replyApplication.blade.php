@@ -29,7 +29,7 @@
 			</h1>
 		</div><!-- /.page-header -->
 
-		<?php //print_r($status); exit; ?>
+		<?php $selectedStatus=$ticket->status; //print_r($status); exit; ?>
 
 		<div class="row">
 			<div class="col-xs-12">				
@@ -108,7 +108,7 @@
 						<select name="status" class="col-xs-10 col-sm-5">
 							<option value="">Please select status</option>
 							@foreach($status as $status)
-							<option value="{{ $status->id}}">{{ $status->status_name}}</option>
+							<option value="{{ $status->id}}" {{ $selectedStatus == $status->id ? 'selected="selected"' : '' }}>{{ $status->status_name}}</option>
 							@endforeach
 						</select>					
 							

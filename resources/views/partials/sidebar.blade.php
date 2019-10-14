@@ -118,7 +118,7 @@
 						</ul>
 					</li>
 
-					@if(Auth::user()->is_admin==1)
+					@if(Auth::user()->is_hr_admin==1)
 
 					<li class="@if($controller=='HrAdminController' || $controller=='LeaveController') active open @endif">
 						<a href="#" class="dropdown-toggle">

@@ -173,7 +173,7 @@
 										<div class="profile-info-name"> Department </div>
 
 										<div class="profile-info-value">
-											<span class="editable" id="about">{{$users->department}}</span>
+											<span class="editable" id="about">{{$users->dept_name}}</span>
 										</div>
 									</div>									
 

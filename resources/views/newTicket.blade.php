@@ -124,96 +124,67 @@
 	</div><!-- /.page-content -->
 </div>
 
-		<script src="assets/js/jquery-2.1.4.min.js"></script>
-		<script src="assets/js/chosen.jquery.min.js"></script>
-		<script src="assets/js/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/bootstrap-datepicker.min.js"></script>
 
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+	jQuery(function($) {			
+	
+		//datepicker plugin
+		//link
+		$('.date-picker').datepicker({
+			autoclose: true,
+			todayHighlight: true
+		})
+		//show datepicker when clicking on the icon
+		.next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+	
+		//or change it into a date range picker
+		$('.input-daterange').datepicker({autoclose:true});
 
-		<script src="assets/js/jquery-ui.custom.min.js"></script>
-		<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-		
-		<script src="assets/js/spinbox.min.js"></script>
-		
-		<script src="assets/js/bootstrap-timepicker.min.js"></script>
-		<script src="assets/js/moment.min.js"></script>
-		<script src="assets/js/daterangepicker.min.js"></script>
-		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
-		<script src="assets/js/bootstrap-colorpicker.min.js"></script>
-		<script src="assets/js/jquery.knob.min.js"></script>
-		<script src="assets/js/autosize.min.js"></script>
-		<script src="assets/js/jquery.inputlimiter.min.js"></script>
-		<script src="assets/js/jquery.maskedinput.min.js"></script>
-		<script src="assets/js/bootstrap-tag.min.js"></script>
-
-		<!-- inline scripts related to this page -->
-		<script type="text/javascript">
-			jQuery(function($) {			
-			
-				//datepicker plugin
-				//link
-				$('.date-picker').datepicker({
-					autoclose: true,
-					todayHighlight: true
+		if(!ace.vars['touch']) {
+			$('.chosen-select').chosen({allow_single_deselect:true}); 
+			//resize the chosen on window resize
+	
+			$(window)
+			.off('resize.chosen')
+			.on('resize.chosen', function() {
+				$('.chosen-select').each(function() {
+					 var $this = $(this);
+					 $this.next().css({'width': $this.parent().width()});
 				})
-				//show datepicker when clicking on the icon
-				.next().on(ace.click_event, function(){
-					$(this).prev().focus();
-				});
-			
-				//or change it into a date range picker
-				$('.input-daterange').datepicker({autoclose:true});
-
-				if(!ace.vars['touch']) {
-					$('.chosen-select').chosen({allow_single_deselect:true}); 
-					//resize the chosen on window resize
-			
-					$(window)
-					.off('resize.chosen')
-					.on('resize.chosen', function() {
-						$('.chosen-select').each(function() {
-							 var $this = $(this);
-							 $this.next().css({'width': $this.parent().width()});
-						})
-					}).trigger('resize.chosen');
-					//resize chosen on sidebar collapse/expand
-					$(document).on('settings.ace.chosen', function(e, event_name, event_val) {
-						if(event_name != 'sidebar_collapsed') return;
-						$('.chosen-select').each(function() {
-							 var $this = $(this);
-							 $this.next().css({'width': $this.parent().width()});
-						})
-					});
-			
-			
-					$('#chosen-multiple-style .btn').on('click', function(e){
-						var target = $(this).find('input[type=radio]');
-						var which = parseInt(target.val());
-						if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-						 else $('#form-field-select-4').removeClass('tag-input-style');
-					});
-				}
-
-				//chosen plugin inside a modal will have a zero width because the select element is originally hidden
-				//and its width cannot be determined.
-				//so we set the width after modal is show
-				$('#modal-form').on('shown.bs.modal', function () {
-					if(!ace.vars['touch']) {
-						$(this).find('.chosen-container').each(function(){
-							$(this).find('a:first-child').css('width' , '210px');
-							$(this).find('.chosen-drop').css('width' , '210px');
-							$(this).find('.chosen-search input').css('width' , '200px');
-						});
-					}
+			}).trigger('resize.chosen');
+			//resize chosen on sidebar collapse/expand
+			$(document).on('settings.ace.chosen', function(e, event_name, event_val) {
+				if(event_name != 'sidebar_collapsed') return;
+				$('.chosen-select').each(function() {
+					 var $this = $(this);
+					 $this.next().css({'width': $this.parent().width()});
 				})
-				/**
-				//or you can activate the chosen plugin after modal is shown
-				//this way select element becomes visible with dimensions and chosen works as expected
-				$('#modal-form').on('shown', function () {
-					$(this).find('.modal-chosen').chosen();
-				})
-				*/
-				
-
+			});	
+	
+			$('#chosen-multiple-style .btn').on('click', function(e){
+				var target = $(this).find('input[type=radio]');
+				var which = parseInt(target.val());
+				if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+				 else $('#form-field-select-4').removeClass('tag-input-style');
 			});
-		</script>
+		}
+
+		//chosen plugin inside a modal will have a zero width because the select element is originally hidden
+		//and its width cannot be determined.
+		//so we set the width after modal is show
+		$('#modal-form').on('shown.bs.modal', function () {
+			if(!ace.vars['touch']) {
+				$(this).find('.chosen-container').each(function(){
+					$(this).find('a:first-child').css('width' , '210px');
+					$(this).find('.chosen-drop').css('width' , '210px');
+					$(this).find('.chosen-search input').css('width' , '200px');
+				});
+			}
+		})
+	});
+</script>
 @stop
